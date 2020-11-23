@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+
+  datasource:
+    driveClassName: orj.mariadb.jdbc.Driver
+    url: jdbc:mariadb://dahanitdev.iptime.org:4001
+    username: root
+    password: shw
+
+  jpa: #JPA 설정
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+server:
+  port: 8081
+log4jdbc: #log4jdbc 설정
+  spylogdelegator:
+    name: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+  dump:
+    sql:
+      maxlinelength: 0
