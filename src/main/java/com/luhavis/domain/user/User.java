@@ -1,5 +1,6 @@
-package com.luhavis.domain;
+package com.luhavis.domain.user;
 
+import com.luhavis.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
