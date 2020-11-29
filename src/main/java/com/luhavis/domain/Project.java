@@ -16,7 +16,7 @@ public class Project extends BaseTimeEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(length = 255, nullable = false)
