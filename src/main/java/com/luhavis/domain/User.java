@@ -1,16 +1,18 @@
-package com.luhavis.domain.user;
+package com.luhavis.domain;
 
 import com.luhavis.domain.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
+@Table(name="tb_user")
+@ToString
 @Entity
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +22,9 @@ public class User extends BaseTimeEntity {
 
     @Column(length = 255, nullable = false)
     private String userPw;
+
+    @Column(length = 25, nullable = false)
+    private String userNm;
 
     @Column(length = 150)
     private String corpNm;
@@ -31,11 +36,13 @@ public class User extends BaseTimeEntity {
     private String corpNo;
 
     @Builder
-    public User(String userId, String userPw, String corpNm, String telNo, String corpNo) {
+    public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo) {
         this.userId = userId;
         this.userPw = userPw;
+        this.userNm = userNm;
         this.corpNm = corpNm;
         this.telNo = telNo;
         this.corpNo = corpNo;
     }
+
 }
