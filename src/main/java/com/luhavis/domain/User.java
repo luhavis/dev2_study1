@@ -34,10 +34,6 @@ public class User extends BaseTimeEntity implements Serializable {
     @Column(length = 20)
     private String corpNo;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Builder
     public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo) {
         this.userId = userId;

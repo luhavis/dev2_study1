@@ -20,6 +20,11 @@ public class Manager extends BaseTimeEntity {
     @Column(length = 13)
     private String managerTelNo;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
     public Manager(String managerNm, String managerTelNo) {
         this.managerNm = managerNm;

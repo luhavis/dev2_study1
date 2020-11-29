@@ -12,20 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class MainController {
 
     private final UserService userService;
 
     @GetMapping("/")
     public String main() {
-        return "hello";
-    }
-
-
-
-    @PostMapping("/users")
-    public String user(@RequestBody UserSaveRequestDto requestDto) {
-        return userService.save(requestDto);
+        return "main";
     }
 }
