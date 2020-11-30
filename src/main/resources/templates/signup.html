@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>개발2팀_스터디1</title>
+	<link type="text/css" rel="stylesheet" href="../css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<div class="container">
+
+	<header>
+
+		<div class="inner">
+
+			<div class="header__menu">
+				<nav>
+					<ul>
+						<li><a href="project" class="current">프로젝트 관리</a></li>
+						<li><a href="projectReg">프로젝트 등록</a></li>
+						<li><a href="manager">담당자 관리</a></li>
+					</ul>
+				</nav>
+
+
+				<div class="header_menu__right">
+					<a href="signin">로그인</a>
+					<a href="signup">회원가입</a>
+					<a href="logout">로그아웃</a>
+				</div>
+			</div>
+
+		</div>
+	</header>
+
+	<div class="wrapper">
+
+		<form action="signup" method="post">
+		<article class="table-set">
+			<div class="inner">
+				<div class="table-list-tit">회원가입</div>
+				<table>
+					<colgroup>
+						<col style="width:200px;">
+						<col style="width:auto;">
+					</colgroup>
+					<tbody>
+					<tr>
+						<th>아이디</th>
+						<td><input type="text" class="tbox" name="userId"></td>
+					<tr>
+						<th>비밀번호</th>
+						<td><input type="text" class="tbox" name="userPw"></td>
+					</tr>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td><input type="text" class="tbox" name="userNm"></td>
+					</tr>
+					<tr>
+						<th>기업명</th>
+						<td><input type="text" class="tbox" name="corpNm"></td>
+					</tr>
+					<tr>
+						<th>사업자등록번호</th>
+						<td><input type="text" class="tbox" name="corpNo"></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td><input type="text" class="tbox" name="telNo"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="table-menu">
+					<a href="javascript:history.back()">취소</a>
+					<button>회원가입</button>
+				</div>
+			</div>
+		</article>
+		</form>
+	</div>
+
+
+
+</div>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/jquery-ui-1.12.1.js"></script>
+<script src="../js/ui.js"></script>
+
+</body>
+</html>

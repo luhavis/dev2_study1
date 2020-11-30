@@ -15,6 +15,7 @@ public class APIController {
 
     @PostMapping("/api/users")
     public String user(@RequestBody UserSaveRequestDto requestDto) {
-        return userService.save(requestDto);
+        long id = userService.save(requestDto);
+        return "success";
     }
 }

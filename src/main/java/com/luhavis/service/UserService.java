@@ -7,24 +7,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
+    @Transactional
+    public Long save(UserSaveRequestDto requestDto) {
+        return userRepository.save(requestDto.toEntity()).getId();
+    }
 
-    public String save(UserSaveRequestDto requestDto) {
-        System.out.println("?");
-        try {
-            System.out.println(userRepository.save(requestDto.toEntity()));
-
-            return "success";
-
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return "error";
-        }
+    public List getAll() {
+        return userRepository.findAll();
     }
 }
