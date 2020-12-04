@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>hi</h1>
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/default}"
+>
+
+
+    <div class="wrapper" layout:fragment="content">
+        <article class="table-set">
+            안녕하세요
+        </article>
+    </div>
+
 </html>
