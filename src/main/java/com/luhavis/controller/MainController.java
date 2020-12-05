@@ -1,39 +1,48 @@
 package com.luhavis.controller;
 
-import com.luhavis.controller.dto.RequestUserDTO;
+import com.luhavis.controller.dto.ManagerSaveRequestDto;
 import com.luhavis.controller.dto.UserSaveRequestDto;
-import com.luhavis.domain.UserRepository;
+import com.luhavis.service.ManagerService;
 import com.luhavis.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Controller
 public class MainController {
 
     private final UserService userService;
+    private final ManagerService managerService;
 
     @GetMapping("/")
     public String main() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return "main";
     }
 
-    @GetMapping("/signin")
-    public String signIn() { return "signin"; }
+    @GetMapping("/login")
+    public String signIn() {
+        return "login";
+    }
 
     @GetMapping("/signup")
     public String signUp() {
         return "signup";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/login";
     }
 
     @GetMapping("/project")
@@ -47,7 +56,7 @@ public class MainController {
 
     @GetMapping("/manager")
     public String managerList(Model model) {
-        model.addAttribute("list", userService.getAll());
+        model.addAttribute("list", managerService.getAll());
         return "manager_list";
     }
 
@@ -56,22 +65,20 @@ public class MainController {
         return "manager_reg";
     }
 
+    @PostMapping("/managerReg")
+    public RedirectView manageRegSave(ManagerSaveRequestDto requestDto) {
+        long id = managerService.save(requestDto);
+        return new RedirectView("/manager");
+    }
+
     @GetMapping("/managerEdit")
     public String managerEdit() { return "manager_edit"; }
+    @GetMapping("/member/mypage")
+    public String mypage() { return "mypage"; }
 
     @PostMapping("/signup")
-    public RedirectView signUpActoin(@RequestBody MultiValueMap<String, String> data) {
-
-        UserSaveRequestDto saveRequestDto = UserSaveRequestDto.builder()
-                .userId(data.get("userId").get(0))
-                .userPw(data.get("userPw").get(0))
-                .userNm(data.get("userNm").get(0))
-                .corpNm(data.get("corpNm").get(0))
-                .corpNo(data.get("corpNo").get(0))
-                .telNo(data.get("telNo").get(0))
-                .build();
-
-        long id = userService.save(saveRequestDto);
-        return new RedirectView("/manager");
+    public RedirectView signUpActoin(UserSaveRequestDto userSaveRequestDto) {
+        long id = userService.save(userSaveRequestDto);
+        return new RedirectView("/login");
     }
 }

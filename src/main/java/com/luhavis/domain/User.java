@@ -1,16 +1,20 @@
 package com.luhavis.domain;
 
-import com.luhavis.domain.BaseTimeEntity;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Collection;
 
 @Getter
 @NoArgsConstructor
 @ToString
 @Entity
-public class User extends BaseTimeEntity implements Serializable {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +38,22 @@ public class User extends BaseTimeEntity implements Serializable {
     @Column(length = 20)
     private String corpNo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Builder
-    public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo) {
+    public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo, Role role) {
         this.userId = userId;
         this.userPw = userPw;
         this.userNm = userNm;
         this.corpNm = corpNm;
         this.telNo = telNo;
         this.corpNo = corpNo;
+        this.role = role;
     }
 
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }

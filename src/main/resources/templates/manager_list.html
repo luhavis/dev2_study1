@@ -29,34 +29,10 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>1</td>
-						<td>신혜욱</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>신혜욱</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>신혜욱</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>신혜욱</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>신혜욱</td>
-						<td>2020-10-02</td>
+					<tr th:each="i : ${list}">
+						<td th:text="${i.id}"></td>
+						<td th:text="${i.managerNm}"></td>
+						<td th:text="${i.createDate}"></td>
 						<td><a href="#none" class="view-btn">상세보기</a></td>
 					</tr>
 					</tbody>

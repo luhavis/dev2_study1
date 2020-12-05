@@ -1,5 +1,6 @@
 package com.luhavis.controller.dto;
 
+import com.luhavis.domain.Role;
 import com.luhavis.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class UserSaveRequestDto {
                 .corpNm(corpNm)
                 .telNo(telNo)
                 .corpNo(corpNo)
+                .role(Role.MEMBER)
                 .build();
     }
 }

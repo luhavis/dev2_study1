@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="~{layout/default}"
+>
+	<div class="wrapper" layout:fragment="content">
+
+
+		<article class="table-set">
+			<form name="login" action="/login" method="post">
+				<div class="inner">
+					<div class="table-list-tit">로그인</div>
+					<table>
+						<colgroup>
+							<col style="width:200px;">
+							<col style="width:auto;">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>아이디</th>
+							<td><input class="tbox" name="username"></td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td><input class="tbox" name="userPw"></td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="table-menu">
+						<a href="javascript:history.back()">취소</a>
+						<a href="javascript:void(0)" onclick="document.forms.login.submit()">로그인</a>
+					</div>
+				</div>
+			</form>
+		</article>
+
+	</div>
+</html>
