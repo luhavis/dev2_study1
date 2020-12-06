@@ -5,6 +5,8 @@
 	  layout:decorator="~{layout/default}"
 >
 	<div class="wrapper" layout:fragment="content">
+		<form name="form" action="/managerEdit" method="post">
+			<input type="hidden" name="id" th:value="${result.id}">
 		<article class="table-set">
 			<div class="inner">
 				<div class="table-list-tit">담당자 상세</div>
@@ -16,28 +18,29 @@
 					<tbody>
 					<tr>
 						<th>담당자명</th>
-						<td><input class="tbox"></td>
+						<td><input class="tbox" name="managerNm" th:value="${result.managerNm}"></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td><input class="tbox"></td>
+						<td><input class="tbox" name="managerTelNo" th:value="${result.managerTelNo}"></td>
 					</tr>
 					<tr>
 						<th>등록일시</th>
-						<td>2020-10-15 10:15:15</td>
+						<td th:text="${result.createDate}"></td>
 					</tr>
 					<tr>
 						<th>수정일시</th>
-						<td>2020-10-15 10:15:15</td>
+						<td th:text="${result.modifiedDate}"></td>
 					</tr>
 
 					</tbody>
 				</table>
 				<div class="table-menu">
 					<a href="javascript:history.back()">취소</a>
-					<a href="#none">수정</a>
+					<a href="javascript:void(0)" onclick="document.forms.form.submit()">수정</a>
 				</div>
 			</div>
 		</article>
+		</form>
 	</div>
 </html>

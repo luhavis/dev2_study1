@@ -50,4 +50,14 @@ public class Project extends BaseTimeEntity {
         this.user = user;
         this.manager = manager;
     }
+
+    public void update(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager) {
+        this.projectNm = projectNm;
+        this.upperProjectId = upperProjectId;
+        this.projectDesc = projectDesc;
+        this.projectStatus = projectStatus;
+        this.projectAmount = projectAmount;
+        this.user = user;
+        this.manager = manager;
+    }
 }

@@ -1,6 +1,8 @@
 package com.luhavis.service;
 
+import com.luhavis.controller.dto.ManagerRequestDto;
 import com.luhavis.controller.dto.ManagerSaveRequestDto;
+import com.luhavis.controller.dto.ManagerUpdateRequestDto;
 import com.luhavis.domain.Manager;
 import com.luhavis.domain.ManagerRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,5 +35,24 @@ public class ManagerService {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1);
         pageable = PageRequest.of(page, 10);
         return managerRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public ManagerRequestDto findById(Long id) {
+        Manager manager = managerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 담당자가 없습니다. id = " + id));
+
+        return new ManagerRequestDto(manager);
+    }
+
+
+    @Transactional
+    public Long update(Long id, ManagerUpdateRequestDto requestDto) {
+        Manager manager = managerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 담당자가 없습니다. id = " + id));
+
+        manager.update(requestDto.getManagerNm(), requestDto.getManagerTelNo());
+
+        return id;
     }
 }

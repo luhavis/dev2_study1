@@ -30,4 +30,9 @@ public class Manager extends BaseTimeEntity {
         this.managerNm = managerNm;
         this.managerTelNo = managerTelNo;
     }
+
+    public void update(String managerNm, String managerTelNo) {
+        this.managerNm = managerNm;
+        this.managerTelNo = managerTelNo;
+    }
 }

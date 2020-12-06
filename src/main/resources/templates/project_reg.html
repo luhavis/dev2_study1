@@ -27,6 +27,7 @@
 						<th>상위프로젝트 선택</th>
 						<td>
 							<select name="upperProjectId">
+								<option value="">없음</option>
 								<option th:each="i : ${projectList}" th:value="${i.id}" th:text="${i.projectNm}"/>
 							</select>
 						</td>
@@ -50,6 +51,7 @@
 						<th>담당자</th>
 						<td>
 							<select name="manager">
+								<option value="">없음</option>
 								<option th:each="i : ${managerList}" th:value="${i.id}" th:text="${i.managerNm}"/>
 							</select>
 						</td>

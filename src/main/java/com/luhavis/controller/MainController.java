@@ -1,8 +1,6 @@
 package com.luhavis.controller;
 
-import com.luhavis.controller.dto.ManagerSaveRequestDto;
-import com.luhavis.controller.dto.ProjectSaveRequestDto;
-import com.luhavis.controller.dto.UserSaveRequestDto;
+import com.luhavis.controller.dto.*;
 import com.luhavis.service.ManagerService;
 import com.luhavis.service.ProjectService;
 import com.luhavis.service.UserService;
@@ -71,7 +69,19 @@ public class MainController {
 
 
     @GetMapping("/projectEdit")
-    public String projectEdit() { return "project_edit"; }
+    public String projectEdit(Model model, long id) {
+        model.addAttribute("result", projectService.findById(id));
+
+        model.addAttribute("managerList", managerService.getAll());
+        model.addAttribute("projectList", projectService.getAll());
+        return "project_edit";
+    }
+
+    @PostMapping("/projectEdit")
+    public RedirectView projectEdit(Long id, ProjectUpdateRequestDto requestDto) {
+        projectService.update(id, requestDto);
+        return new RedirectView("/project");
+    }
 
     @GetMapping("/manager")
     public String managerList(Model model, final Pageable pageable) {
@@ -91,7 +101,19 @@ public class MainController {
     }
 
     @GetMapping("/managerEdit")
-    public String managerEdit() { return "manager_edit"; }
+    public String managerEdit(Model model, long id) {
+        model.addAttribute("result", managerService.findById(id));
+        return "manager_edit";
+    }
+
+    @PostMapping("/managerEdit")
+    public RedirectView managerEdit(Long id, ManagerUpdateRequestDto requestDto) {
+        managerService.update(id, requestDto);
+        return new RedirectView("/manager");
+    }
+
+
+
     @GetMapping("/member/mypage")
     public String mypage() { return "mypage"; }
 

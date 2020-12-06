@@ -33,7 +33,7 @@
 						<td th:text="${i.id}"></td>
 						<td th:text="${i.managerNm}"></td>
 						<td th:text="${i.createDate}"></td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
+						<td><a th:href="@{'/managerEdit?id='+${i.id}}" class="view-btn">상세보기</a></td>
 					</tr>
 					</tbody>
 				</table>

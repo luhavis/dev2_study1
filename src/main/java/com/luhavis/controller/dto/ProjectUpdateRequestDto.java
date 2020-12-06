@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectSaveRequestDto {
+public class ProjectUpdateRequestDto {
     private String projectNm;
     private String upperProjectId;
     private String projectDesc;
@@ -20,16 +20,15 @@ public class ProjectSaveRequestDto {
     private Manager manager;
     private User user;
 
-    public Project toEntity() {
-        return Project.builder()
-                .projectNm(projectNm)
-                .upperProjectId(upperProjectId)
-                .projectStatus(projectStatus)
-                .projectAmount(projectAmount)
-                .projectDesc(projectDesc)
-                .manager(manager)
-                .user(user)
-                .build();
+    @Builder
+    public ProjectUpdateRequestDto(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, Manager manager, User user) {
+        this.projectNm = projectNm;
+        this.upperProjectId = upperProjectId;
+        this.projectDesc = projectDesc;
+        this.projectStatus = projectStatus;
+        this.projectAmount = projectAmount;
+        this.manager = manager;
+        this.user = user;
     }
 
 }
