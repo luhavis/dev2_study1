@@ -6,6 +6,7 @@
 >
 	<div class="wrapper" layout:fragment="content">
 		<article class="table-set">
+			<form name="form" action="/projectReg" method="post">
 			<div class="inner">
 				<div class="table-list-tit">프로젝트 등록</div>
 				<table>
@@ -19,10 +20,14 @@
 						<td><input class="tbox" name="projectNm"></td>
 					</tr>
 					<tr>
+						<th>프로젝트설명</th>
+						<td><input class="tbox" name="projectDesc"></td>
+					</tr>
+					<tr>
 						<th>상위프로젝트 선택</th>
 						<td>
-							<select name="upperId">
-								<option>선택</option>
+							<select name="upperProjectId">
+								<option th:each="i : ${projectList}" th:value="${i.id}" th:text="${i.projectNm}"/>
 							</select>
 						</td>
 					</tr>
@@ -45,7 +50,7 @@
 						<th>담당자</th>
 						<td>
 							<select name="manager">
-								<option>선택</option>
+								<option th:each="i : ${managerList}" th:value="${i.id}" th:text="${i.managerNm}"/>
 							</select>
 						</td>
 					</tr>
@@ -53,9 +58,10 @@
 				</table>
 				<div class="table-menu">
 					<a href="javascript:history.back()">취소</a>
-					<a href="#none">등록</a>
+					<a href="javascript:void(0)" onclick="document.forms.form.submit()">등록</a>
 				</div>
 			</div>
+			</form>
 		</article>
 	</div>
 </html>

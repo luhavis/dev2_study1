@@ -9,9 +9,9 @@
         <div class="header__menu">
             <nav>
                 <ul>
-                    <li><a href="project">프로젝트 관리</a></li>
-                    <li><a href="projectReg">프로젝트 등록</a></li>
-                    <li><a href="manager" class="current">담당자 관리</a></li>
+                    <li><a href="project" th:class="${#httpServletRequest.requestURI == '/project'} ? 'current':''">프로젝트 관리</a></li>
+                    <li><a href="projectReg" th:class="${#strings.contains(#httpServletRequest.requestURI,'projectReg')} ? 'current':''">프로젝트 등록</a></li>
+                    <li><a href="manager" th:class="${#strings.contains(#httpServletRequest.requestURI,'manager')} ? 'current':''">담당자 관리</a></li>
                 </ul>
             </nav>
 

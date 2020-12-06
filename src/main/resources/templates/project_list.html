@@ -30,53 +30,58 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>1</td>
-						<td>냉매</td>
-						<td>신혜욱</td>
-						<td>완료</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>냉매</td>
-						<td>신혜욱</td>
-						<td>완료</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>냉매</td>
-						<td>신혜욱</td>
-						<td>완료</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>냉매</td>
-						<td>신혜욱</td>
-						<td>완료</td>
-						<td>2020-10-02</td>
-						<td><a href="#none" class="view-btn">상세보기</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>냉매</td>
-						<td>신혜욱</td>
-						<td>완료</td>
-						<td>2020-10-02</td>
+					<tr th:each="i : ${list}">
+						<td th:text="${i.id}"></td>
+						<td th:text="${i.projectNm}"></td>
+						<td th:if="${i.manager != null}" th:text="${i.manager.managerNm}"></td>
+						<td th:if="${i.manager == null}">-</td>
+						<td th:text="${i.projectStatus}"></td>
+						<td th:text="${i.createDate}"></td>
 						<td><a href="#none" class="view-btn">상세보기</a></td>
 					</tr>
 					</tbody>
 				</table>
 				<article class="paging">
-					<ul>
-						<li><a href="#none" class="current">1</a></li>
-						<li><a href="#none">2</a></li>
-						<li><a href="#none">3</a></li>
+					<!--표에 사용될 변수값 초기화 -->
+					<ul class="pagination"
+						th:with="start=${T(Math).floor(list.number/10)*10 + 1},
+                    last=(${start + 9 < list.totalPages ? start + 9 : list.totalPages})">
+						<th:block th:with="
+                firstAddr=@{/project(page=1)},
+                prevAddr=@{/project(page=${list.number})},
+                nextAddr=@{/project(page=${list.number + 2})},
+                lastAddr=@{/project(page=${list.totalPages})}">
+							<li>
+								<a th:href="${firstAddr}" aria-label="First">
+									<span aria-hidden="true">First</span>
+								</a>
+							</li>
+							<!-- 이전 페이지로 가기 버튼 -->
+							<li th:class="${list.first} ? 'disabled'">
+								<a th:href="${list.first} ? '#' :${prevAddr}"
+								   aria-label="Previous">
+									<span aria-hidden="true">&lt;</span>
+								</a>
+							</li>
+							<!--1,2,3,4,.. 등 페이지-->
+							<li th:each="page: ${#numbers.sequence(start, last)}"
+								th:class="${page == list.number + 1} ? 'active'">
+								<a th:class="${page == list.number + 1} ? 'current'" th:text="${page}" th:href="@{/project(page=${page})}"></a>
+							</li>
+							<!--다음 페이지로 -->
+							<li th:class="${list.last} ? 'disabled'">
+								<a th:href="${list.last} ? '#' : ${nextAddr}"
+								   aria-label="Next">
+									<span aria-hidden="true">&gt;</span>
+								</a>
+							</li>
+							<!--맨 마지막 페이지로 이동 -->
+							<li>
+								<a th:href="${lastAddr}" aria-label="Last">
+									<span aria-hidden="true">Last</span>
+								</a>
+							</li>
+						</th:block>
 					</ul>
 				</article>
 			</div>

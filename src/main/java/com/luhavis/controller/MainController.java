@@ -1,10 +1,13 @@
 package com.luhavis.controller;
 
 import com.luhavis.controller.dto.ManagerSaveRequestDto;
+import com.luhavis.controller.dto.ProjectSaveRequestDto;
 import com.luhavis.controller.dto.UserSaveRequestDto;
 import com.luhavis.service.ManagerService;
+import com.luhavis.service.ProjectService;
 import com.luhavis.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @RequiredArgsConstructor
 @Controller
 public class MainController {
 
     private final UserService userService;
     private final ManagerService managerService;
+    private final ProjectService projectService;
 
     @GetMapping("/")
     public String main() {
@@ -46,17 +51,31 @@ public class MainController {
     }
 
     @GetMapping("/project")
-    public String project() { return "project_list"; }
+    public String project(Model model, final Pageable pageable) {
+        model.addAttribute("list", projectService.getAll(pageable));
+        return "project_list";
+    }
 
     @GetMapping("/projectReg")
-    public String projectReg() { return "project_reg"; }
+    public String projectReg(Model model) {
+        model.addAttribute("managerList", managerService.getAll());
+        model.addAttribute("projectList", projectService.getAll());
+        return "project_reg";
+    }
+
+    @PostMapping("/projectReg")
+    public RedirectView projectRegSave(ProjectSaveRequestDto requestDto) {
+        long id = projectService.save(requestDto);
+        return new RedirectView("/project");
+    }
+
 
     @GetMapping("/projectEdit")
     public String projectEdit() { return "project_edit"; }
 
     @GetMapping("/manager")
-    public String managerList(Model model) {
-        model.addAttribute("list", managerService.getAll());
+    public String managerList(Model model, final Pageable pageable) {
+        model.addAttribute("list", managerService.getAll(pageable));
         return "manager_list";
     }
 

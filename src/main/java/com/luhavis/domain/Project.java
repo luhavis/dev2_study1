@@ -22,9 +22,8 @@ public class Project extends BaseTimeEntity {
     @Column(length = 255, nullable = false)
     private String projectNm;
 
-    @OneToOne
-    @JoinColumn(name = "project_id")
-    private Project upperProjectId;
+    @Column
+    private String upperProjectId;
 
     @Column(columnDefinition = "TEXT")
     private String projectDesc;
@@ -35,13 +34,20 @@ public class Project extends BaseTimeEntity {
     @Column
     private int projectAmount;
 
+
+    @OneToOne
+    @JoinColumn(name = "manager_id")
+    private Manager manager;
+
+
     @Builder
-    public Project(String projectNm, Project upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user) {
+    public Project(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager) {
         this.projectNm = projectNm;
         this.upperProjectId = upperProjectId;
         this.projectDesc = projectDesc;
         this.projectStatus = projectStatus;
         this.projectAmount = projectAmount;
         this.user = user;
+        this.manager = manager;
     }
 }
