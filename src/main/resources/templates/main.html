@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorator="~{layout/default}"
 >
 
@@ -10,7 +11,16 @@
         <article class="table-set">
             <div class="inner">
                 Main
+                <div sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name"></span>
+                    <span sec:authentication="principal.authorities"></span>
+                    <div sec:authorize="hasRole('ROLE_MEMBER')">일반유저 입니다.</div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">어드민 입니다.</div>
+                </div>
             </div>
+
+
+
         </article>
     </div>
 

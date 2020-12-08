@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <header th:fragment="headerMenu">
 
     <div class="inner">
@@ -17,9 +19,15 @@
 
 
             <div class="header_menu__right">
-                <a href="/login">로그인</a>
-                <a href="/signup">회원가입</a>
-                <a href="/logout">로그아웃</a>
+                <div sec:authorize="isAuthenticated()" style="display: inline-block; vertical-align: middle;">
+                    <span sec:authentication="name"></span>
+                    님 안녕하세요.
+                </div>
+                <div  style="display: inline-block; vertical-align: middle;">
+                <a sec:authorize="isAnonymous()" href="/login">로그인</a>
+                <a sec:authorize="isAnonymous()" href="/signup">회원가입</a>
+                <a sec:authorize="isAuthenticated()" href="/logout">로그아웃</a>
+                </div>
             </div>
         </div>
 
