@@ -20,7 +20,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @Configuration
-public class UserAuthenticationProvier implements AuthenticationProvider {
+public class UserAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
 
     @Override

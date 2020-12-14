@@ -12,17 +12,15 @@ import lombok.Setter;
 public class ManagerSaveRequestDto {
     private String managerNm;
     private String managerTelNo;
-
-    @Builder
-    public ManagerSaveRequestDto(String managerNm, String managerTelNo) {
-        this.managerNm = managerNm;
-        this.managerTelNo = managerTelNo;
-    }
+    private Long createdUser;
+    private Long modifiedUser;
 
     public Manager toEntity() {
         return Manager.builder()
                 .managerNm(managerNm)
                 .managerTelNo(managerTelNo)
+                .createdUser(createdUser)
+                .modifiedUser(modifiedUser)
                 .build();
     }
 

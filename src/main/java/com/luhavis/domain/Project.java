@@ -34,6 +34,12 @@ public class Project extends BaseTimeEntity {
     @Column
     private int projectAmount;
 
+    @Column
+    private Long createdUser;
+
+    @Column
+    private Long modifiedUser;
+
 
     @OneToOne
     @JoinColumn(name = "manager_id")
@@ -41,7 +47,7 @@ public class Project extends BaseTimeEntity {
 
 
     @Builder
-    public Project(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager) {
+    public Project(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager, Long createdUser, Long modifiedUser) {
         this.projectNm = projectNm;
         this.upperProjectId = upperProjectId;
         this.projectDesc = projectDesc;
@@ -49,9 +55,11 @@ public class Project extends BaseTimeEntity {
         this.projectAmount = projectAmount;
         this.user = user;
         this.manager = manager;
+        this.createdUser = createdUser;
+        this.modifiedUser = modifiedUser;
     }
 
-    public void update(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager) {
+    public void update(String projectNm, String upperProjectId, String projectDesc, String projectStatus, int projectAmount, User user, Manager manager, Long modifiedUser) {
         this.projectNm = projectNm;
         this.upperProjectId = upperProjectId;
         this.projectDesc = projectDesc;
@@ -59,5 +67,6 @@ public class Project extends BaseTimeEntity {
         this.projectAmount = projectAmount;
         this.user = user;
         this.manager = manager;
+        this.modifiedUser = modifiedUser;
     }
 }

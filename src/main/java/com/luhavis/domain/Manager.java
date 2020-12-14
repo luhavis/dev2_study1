@@ -20,19 +20,23 @@ public class Manager extends BaseTimeEntity {
     @Column(length = 13)
     private String managerTelNo;
 
+    @Column(nullable = false)
+    private Long createdUser;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false)
+    private Long modifiedUser;
 
     @Builder
-    public Manager(String managerNm, String managerTelNo) {
+    public Manager(String managerNm, String managerTelNo, Long createdUser, Long modifiedUser) {
         this.managerNm = managerNm;
         this.managerTelNo = managerTelNo;
+        this.createdUser = createdUser;
+        this.modifiedUser = modifiedUser;
     }
 
-    public void update(String managerNm, String managerTelNo) {
+    public void update(String managerNm, String managerTelNo, Long modifiedUser) {
         this.managerNm = managerNm;
         this.managerTelNo = managerTelNo;
+        this.modifiedUser = modifiedUser;
     }
 }

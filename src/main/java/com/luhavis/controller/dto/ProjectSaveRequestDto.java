@@ -19,6 +19,8 @@ public class ProjectSaveRequestDto {
     private int projectAmount;
     private Manager manager;
     private User user;
+    private Long createdUser;
+    private Long modifiedUser;
 
     public Project toEntity() {
         return Project.builder()
@@ -28,6 +30,8 @@ public class ProjectSaveRequestDto {
                 .projectAmount(projectAmount)
                 .projectDesc(projectDesc)
                 .manager(manager)
+                .createdUser(createdUser)
+                .modifiedUser(modifiedUser)
                 .user(user)
                 .build();
     }

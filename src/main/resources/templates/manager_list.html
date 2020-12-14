@@ -12,11 +12,15 @@
 				</div>
 
 				<article class="search__form">
-					<select>
-						<option selected>담당자</option>
+					<form name="searchForm" action="/manager">
+
+
+					<select name="searchKeyword">
+						<option value="managerNm" th:selected="${searchKeyword eq 'managerNm'}">담당자</option>
 					</select>
-					<input placeholder="검색어 입력">
-					<a href="#none" class="search-btn">검색</a>
+					<input placeholder="검색어 입력" name="searchKeywordValue" th:value="${searchKeywordValue}">
+					<a href="javascript:void(0)" onclick="document.forms.searchForm.submit()" class="search-btn">검색</a>
+					</form>
 				</article>
 
 				<table>
@@ -28,7 +32,7 @@
 						<th>메뉴</th>
 					</tr>
 					</thead>
-					<tbody>
+					<tbody id="list">
 					<tr th:each="i : ${list}">
 						<td th:text="${i.id}"></td>
 						<td th:text="${i.managerNm}"></td>

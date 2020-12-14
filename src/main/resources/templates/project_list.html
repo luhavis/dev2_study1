@@ -10,12 +10,14 @@
 				<div class="table-list-tit">테이블 타이틀</div>
 
 				<article class="search__form">
-					<select>
-						<option>프로젝트명</option>
-						<option>담당자</option>
+					<form name="searchForm" action="/project">
+					<select name="searchKeyword">
+						<option value="projectNm" th:selected="${searchKeyword eq 'projectNm'}">프로젝트명</option>
+						<option value="managerNm" th:selected="${searchKeyword eq 'managerNm'}">담당자</option>
 					</select>
-					<input placeholder="검색어 입력">
-					<a href="#none" class="search-btn">검색</a>
+					<input placeholder="검색어 입력" name="searchKeywordValue" th:value="${searchKeywordValue}">
+					<a href="javascript:void(0)" onclick="document.forms.searchForm.submit()" class="search-btn">검색</a>
+					</form>
 				</article>
 
 				<table>

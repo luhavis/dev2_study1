@@ -1,10 +1,13 @@
 package com.luhavis.config;
 
+import com.luhavis.filter.CustomAuthenticationFilter;
+import com.luhavis.handler.CustomLogoutSuccessHandler;
 import com.luhavis.service.CustomUserDetailsService;
 import com.luhavis.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
@@ -30,6 +34,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public CustomLogoutSuccessHandler customLogoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 
     @Override
@@ -52,8 +61,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
+                .logoutSuccessHandler(customLogoutSuccessHandler())
                 .invalidateHttpSession(true);
+
 
         http.exceptionHandling()
                 .accessDeniedPage("/denied");
@@ -63,5 +73,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
