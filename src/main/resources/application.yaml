@@ -3,8 +3,8 @@ spring:
     active: local
 
   datasource:
-    driveClassName: orj.mariadb.jdbc.Driver
-    url: jdbc:mariadb://dahanitdev.iptime.org:4001
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://dahanitdev.iptime.org:4001/dev2_study1
     username: root
     password: shw
 
