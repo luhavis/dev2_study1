@@ -2,6 +2,8 @@ spring:
   profiles:
     active: local
 
+
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://dahanitdev.iptime.org:4001/dev2_study1
@@ -14,7 +16,7 @@ spring:
 
   jpa: #JPA 설정
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.MariaDBDialect
       format_sql: true
       use_sql_comments: true
