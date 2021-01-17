@@ -1,38 +1,28 @@
-package com.luhavis.util;
+package com.luhavis.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.luhavis.properties.AuthProperties;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-public class AuthUtil {
+@RequiredArgsConstructor
+@Service
+public class AuthService {
 
-    @Value("${google.auth.clientId}")
-    private String clientId;
-
-    @Value("${google.auth.clientSecret}")
-    private String clientSecret;
-
-    public AuthUtil() {
-
-    }
-
-    private static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
-    private static String CLIENT_ID = "UlAHKcKy5rPFZH9Mm_8Z";
-    private static String CLIENT_SECRET = "QfR_JNVo0E";
-
+    private final AuthProperties authProperties;
+    private String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
 
     /** Naver 사용자 Access token 요청
      *  @see <a href="https://developers.naver.com/docs/login/web/#1-5--%EC%A0%91%EA%B7%BC-%ED%86%A0%ED%81%B0-%EC%9A%94%EC%B2%AD">네이버 개발자 Docs<a>
      * */
-    public static Map<String, String> getNaverAccessToken(String state, String code) throws Exception {
-        URL url = new URL("https://nid.naver.com/oauth2.0/token?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&grant_type=authorization_code&state="+state+"&code="+code);
+    public Map<String, String> getNaverAccessToken(String state, String code) throws Exception {
+        URL url = new URL("https://nid.naver.com/oauth2.0/token?client_id="+authProperties.getNaver().get("clientId")+"&client_secret="+authProperties.getNaver().get("clientSecret")+"&grant_type=authorization_code&state="+state+"&code="+code);
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
@@ -58,7 +48,7 @@ public class AuthUtil {
     /** Naver 사용자 프로필 정보 조회
      * @see <a href="https://developers.naver.com/docs/login/web/#1-6--%EB%84%A4%EC%9D%B4%EB%B2%84-%EC%82%AC%EC%9A%A9%EC%9E%90-%ED%94%84%EB%A1%9C%ED%95%84-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C">네이버 개발자 Docs<a>
      * */
-    public static Map<String, String> getNaverUserInfo(String accessToken) throws Exception {
+    public Map<String, String> getNaverUserInfo(String accessToken) throws Exception {
         URL url = new URL("https://openapi.naver.com/v1/nid/me");
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
