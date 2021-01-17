@@ -1,12 +1,14 @@
 function onSignIn(googleUser) {
-    var idToken = googleUser.getAuthResponse().id_token;
+    var id_token = googleUser.getAuthResponse().id_token;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/auth/googlesign");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function() {
         console.log("Signed in as : " + xhr.responseText);
     }
-    xhr.send("idToken="+idToken);
+    xhr.send(JSON.stringify({
+        id_token: id_token
+    }));
 }
 
 function signOut() {
