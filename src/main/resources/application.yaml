@@ -2,7 +2,12 @@ spring:
   profiles:
     active: local
 
+  devtools:
+    livereload:
+      enabled: true
 
+  freemarker:
+    cache: false
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -61,3 +66,14 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+
+
+google:
+  auth:
+    clientId: "811801564346-qergsgujhiga65la03vl4mkvuu0kkck1"
+
+naver:
+  auth:
+    clientId: "UlAHKcKy5rPFZH9Mm_8Z"
+    clientSecret: "QfR_JNVo0E"

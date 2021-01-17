@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<head th:include="fragment/head :: header"></head>
+
+<div class="container">
+    <header th:replace="fragment/header :: headerMenu"></header>
+
+    <div layout:fragment="content"></div>
+</div>
+
+<footer th:replace="fragment/footer :: footer"></footer>
+
+
+<script th:src="@{../js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{../js/jquery-ui-1.12.1.js}"></script>
+<script th:src="@{../js/ui.js}"></script>
+<script th:src="@{../js/login.js}"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</html>
