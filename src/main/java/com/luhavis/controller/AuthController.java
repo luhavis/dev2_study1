@@ -2,11 +2,13 @@ package com.luhavis.controller;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.auth.oauth2.GooglePublicKeysManager;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.LowLevelHttpRequest;
 import com.google.api.client.json.JsonFactory;
 
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.luhavis.properties.AuthProperties;
 import com.luhavis.service.AuthService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
@@ -48,14 +51,18 @@ public class AuthController {
         }
     }
 
-
+    /** Google Sign-in
+     * @see <a href="https://developers.google.com/identity/sign-in/web/backend-auth">Google Sign-in Docs<a>
+     * */
     @PostMapping("/auth/googlesign")
-    public String googleSign(@RequestBody Map<String, String> params) throws GeneralSecurityException, IOException {
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new MockHttpTransport(), new JacksonFactory())
-                .setAudience(Collections.singleton(authProperties.getGoogle().get("clientId")))
+    public String googleSignIn(@RequestBody Map<String, String> params) throws GeneralSecurityException, IOException {
+        GooglePublicKeysManager publicKeysManager = new GooglePublicKeysManager.Builder(GoogleNetHttpTransport.newTrustedTransport(), new GsonFactory())
+                .setPublicCertsEncodedUrl("https://www.googleapis.com/oauth2/v3/certs")
                 .build();
-
-        GoogleIdToken idToken = verifier.verify(params.get("id_token"));
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(GoogleNetHttpTransport.newTrustedTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(authProperties.getGoogle().get("clientId")))
+                .build();
+        GoogleIdToken idToken = GoogleIdToken.parse(verifier.getJsonFactory(), params.get("id_token"));
         if (idToken != null) {
           GoogleIdToken.Payload payload = idToken.getPayload();
 
