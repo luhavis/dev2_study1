@@ -10,13 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.security.Principal;
 import java.security.SecureRandom;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -26,7 +29,9 @@ public class MainController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String main() { return "main"; }
+    public String main() {
+        return "main";
+    }
 
     @GetMapping("/login")
     public String signIn(HttpServletRequest request, Model model) {
@@ -39,7 +44,8 @@ public class MainController {
     }
 
     @GetMapping("/signup")
-    public String signUp() {
+    public String signUp(@RequestParam Map<String, Object> param, Model model) {
+        model.addAllAttributes(param);
         return "signup";
     }
 

@@ -48,7 +48,7 @@ public class AuthService {
     /** Naver 사용자 프로필 정보 조회
      * @see <a href="https://developers.naver.com/docs/login/web/#1-6--%EB%84%A4%EC%9D%B4%EB%B2%84-%EC%82%AC%EC%9A%A9%EC%9E%90-%ED%94%84%EB%A1%9C%ED%95%84-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C">네이버 개발자 Docs<a>
      * */
-    public Map<String, String> getNaverUserInfo(String accessToken) throws Exception {
+    public Map<String, Map> getNaverUserInfo(String accessToken) throws Exception {
         URL url = new URL("https://openapi.naver.com/v1/nid/me");
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
@@ -67,7 +67,7 @@ public class AuthService {
         in.close();
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> m = mapper.readValue(response.toString(), Map.class);
+        Map<String, Map> m = mapper.readValue(response.toString(), Map.class);
 
         return m;
     }

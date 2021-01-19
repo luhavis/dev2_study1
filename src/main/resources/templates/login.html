@@ -32,14 +32,16 @@
 					<div class="table-menu">
 						<a href="javascript:history.back()">취소</a>
 						<a href="javascript:void(0)" onclick="document.forms.login.submit()">로그인</a>
-						<a class="naver-login" th:href="${authURI}">
-							<img src="../images/naver_login.png" alt="">
-						</a>
 					</div>
-					<div class="g-signin2" data-onsuccess="onSignIn"></div>
-					<a href="#" onclick="signOut();">Sign out</a>
 				</div>
 			</form>
+			<div class="social-login">
+				<div class="naver-login">
+					<a th:href="${authURI}"></a>
+				</div>
+				<div class="g-signin2" data-onsuccess="onSignIn"></div>
+				<a href="#" onclick="signOut();">Sign out</a>
+			</div>
 		</article>
 
 	</div>

@@ -41,10 +41,13 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         return new CustomLogoutSuccessHandler();
     }
 
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/lib/**", "/templates/**");
     }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

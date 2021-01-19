@@ -45,8 +45,18 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(25) not null default 'BASIC'")
     private String userType;
 
+    @Column(length = 100)
+    private String userEmail;
+
+    @Column(length = 255)
+    private String userNickName;
+
+
+
+
+
     @Builder
-    public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo, Role role, String userType) {
+    public User(String userId, String userPw, String userNm, String corpNm, String telNo, String corpNo, Role role, String userType, String userEmail, String userNickName) {
         this.userId = userId;
         this.userPw = userPw;
         this.userNm = userNm;
@@ -55,6 +65,8 @@ public class User extends BaseTimeEntity {
         this.corpNo = corpNo;
         this.role = role;
         this.userType = userType;
+        this.userEmail = userEmail;
+        this.userNickName = userNickName;
     }
 
     public String getRoleKey() {

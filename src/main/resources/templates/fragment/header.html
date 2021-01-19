@@ -21,7 +21,7 @@
 
             <div class="header_menu__right">
                 <div sec:authorize="isAuthenticated()" style="display: inline-block; vertical-align: middle;">
-                    <span sec:authentication="name"></span>
+                    <span sec:authentication="principal.userNm"></span>
                     님 안녕하세요.
                 </div>
                 <div  style="display: inline-block; vertical-align: middle;">

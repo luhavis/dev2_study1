@@ -6,6 +6,7 @@
 >
 	<div class="wrapper" layout:fragment="content">
 		<form name="signup" action="/signup" method="post">
+			<input type="hidden" name="userType" th:value="${userType}">
 		<article class="table-set">
 			<div class="inner">
 				<div class="table-list-tit">회원가입</div>
@@ -17,11 +18,10 @@
 					<tbody>
 					<tr>
 						<th>아이디</th>
-						<td><input type="text" class="tbox" name="userId"></td>
+						<td><input type="text" class="tbox" name="userId" ></td>
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="text" class="tbox" name="userPw"></td>
-					</tr>
 					</tr>
 					<tr>
 						<th>이름</th>
@@ -37,7 +37,11 @@
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td><input type="text" class="tbox" name="telNo"></td>
+						<td><input type="text" class="tbox" name="telNo" th:value="${mobile}"></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><input type="text" class="tbox" name="userEmail" th:value="${email}"></td>
 					</tr>
 					</tbody>
 				</table>

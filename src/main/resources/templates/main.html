@@ -10,10 +10,10 @@
     <div class="wrapper" layout:fragment="content">
         <article class="table-set">
             <div class="inner">
-                Main
+                Main2
                 <div sec:authorize="isAuthenticated()">
-                    <span sec:authentication="name"></span>
-                    <span sec:authentication="principal.authorities"></span>
+                    <span sec:authentication="principal.userNm"></span>
+                    <span sec:authentication="principal.role"></span>
                     <div sec:authorize="hasRole('ROLE_MEMBER')">일반유저 입니다.</div>
                     <div sec:authorize="hasRole('ROLE_ADMIN')">어드민 입니다.</div>
                 </div>
