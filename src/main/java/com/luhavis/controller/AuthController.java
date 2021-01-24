@@ -32,11 +32,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.AuthProvider;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -93,7 +95,10 @@ public class AuthController {
      * @see <a href="https://developers.google.com/identity/sign-in/web/backend-auth">Google Sign-in Docs<a>
      * */
     @PostMapping("/auth/googlesign")
-    public ModelAndView googleSignIn(@RequestBody Map<String, String> params) throws GeneralSecurityException, IOException {
+    @ResponseBody
+    public Map<String, String> googleSignIn(@RequestBody Map<String, String> params, HttpServletResponse res) throws GeneralSecurityException, IOException {
+        Map<String, String> m = new HashMap<String, String>();
+
         GooglePublicKeysManager publicKeysManager = new GooglePublicKeysManager.Builder(GoogleNetHttpTransport.newTrustedTransport(), new GsonFactory())
                 .setPublicCertsEncodedUrl("https://www.googleapis.com/oauth2/v3/certs")
                 .build();
@@ -124,18 +129,18 @@ public class AuthController {
 
             if (user == null) {
 
-                ModelMap model = new ModelMap();
-                model.addAttribute("userType", "GOOGLE");
-                model.addAttribute("email", email);
-                model.addAttribute("nickname", name);
-
-                return new ModelAndView("redirect:/signup", model);
+                m.put("userType", "GOOGLE");
+                m.put("email", email);
+                m.put("nickname", name);
+                m.put("redirectURI", "/signup");
+                return m;
             } else {
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUserId(), user.getUserPw());
 
                 Authentication authentication = this.authenticationProvider.authenticate(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                return new ModelAndView("redirect:/");
+                m.put("redirectURI", "/");
+                return m;
             }
 
         } else {
@@ -144,7 +149,8 @@ public class AuthController {
 
 
 
-        return new ModelAndView("error");
+        m.put("error", "error");
+        return m;
     }
 
 }
