@@ -4,3 +4,6 @@ auth:
   naver:
     clientId: "UlAHKcKy5rPFZH9Mm_8Z"
     clientSecret: "QfR_JNVo0E"
+  kakao:
+    clientId: "a3ad9f43adea2e4aad36e375e84e4d84"
+    clientSecret: "t6txcdXeuCgArKsvkQ63Ma6OhRZ55X8I"

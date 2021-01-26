@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.DataBufferUShort;
 import java.io.IOException;
 import java.security.AuthProvider;
 import java.security.GeneralSecurityException;
@@ -56,6 +57,23 @@ public class AuthController {
     public String callbackPost(ModelMap modelMap) {
 
         return "success";
+    }
+
+    @GetMapping("/oauth2/callback")
+    public ModelAndView oauth2Callback(HttpServletRequest request, @RequestParam Map<String, String> params) {
+        try {
+
+            Map<String, String> res = authService.getKakaoAccessToken(params.get("state"), params.get("code"));
+            Map<String, Map> res2 = authService.getKakaoUserInfo(res.get("access_token"));
+
+            res2.get("properties").get("nickname");
+
+            System.out.println(res);
+        } catch (Exception e) {
+
+        }
+        return new ModelAndView("error");
+
     }
 
     @GetMapping("/auth/callback")

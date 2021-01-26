@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Map;
@@ -71,4 +73,64 @@ public class AuthService {
 
         return m;
     }
+
+    public Map<String, String> getKakaoAccessToken(String state, String code) throws Exception {
+        URL url = new URL("https://kauth.kakao.com/oauth/token");
+
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("User-Agent", USER_AGENT);
+
+        conn.setDoOutput(true);
+
+        DataOutputStream dataOutputStrem = new DataOutputStream(conn.getOutputStream());
+        dataOutputStrem.writeBytes("grant_type=authorization_code&client_id="+authProperties.getKakao().get("clientId")+"&redirect_uri=http://localhost:8081/oauth2/callback&code="+code);
+        dataOutputStrem.flush();
+        dataOutputStrem.close();
+
+        int responseCode = conn.getResponseCode();
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> m = mapper.readValue(response.toString(), Map.class);
+
+        return m;
+    }
+
+    public Map<String, Map> getKakaoUserInfo(String accessToken) throws Exception {
+        URL url = new URL("https://kapi.kakao.com/v2/user/me");
+
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("User-Agent", USER_AGENT);
+        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+        conn.setDoOutput(true);
+
+        int responseCode = conn.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Map> m = mapper.readValue(response.toString(), Map.class);
+
+        return m;
+    }
+
+
 }

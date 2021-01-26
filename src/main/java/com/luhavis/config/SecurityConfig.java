@@ -54,13 +54,24 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/member/**").authenticated()
                 .antMatchers("/infra/**").hasRole("ADMIN")
+                .antMatchers("/oauth2/**").permitAll()
 //                .antMatchers("/**").permitAll();
-                .anyRequest().permitAll();
-
-        http.formLogin()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
-                .permitAll();
+                .permitAll()
+                .and()
+                .oauth2Login()
+                .loginPage("/oauth2/login")
+                .permitAll(); // 마지막에 해야 form 로그인도 사용할 수 있음.
+
+
+//        http.formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/")
+//                .permitAll();
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

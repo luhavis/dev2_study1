@@ -3,7 +3,9 @@ package com.luhavis.controller;
 import com.luhavis.controller.dto.UserSaveRequestDto;
 import com.luhavis.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,5 +66,10 @@ public class MainController {
     public RedirectView signUpAction(UserSaveRequestDto userSaveRequestDto) {
         long id = userService.save(userSaveRequestDto);
         return new RedirectView("/login");
+    }
+
+    @GetMapping("/my")
+    public String getAuth(@AuthenticationPrincipal OAuth2User oAuth2User) {
+        return oAuth2User.toString();
     }
 }

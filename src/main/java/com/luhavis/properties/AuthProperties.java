@@ -17,4 +17,5 @@ public class AuthProperties {
 
     private Map<String, String> google;
     private Map<String, String> naver;
+    private Map<String, String> kakao;
 }
